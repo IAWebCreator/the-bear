@@ -1,0 +1,822 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>the bear ($TB) - The Protector of the Den</title>
+    <meta name="description" content="the bear ($TB) is a symbol of strength and resilience, a community standing together against bullies and FUD.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CSS RESET & BASE STYLES --- */
+        :root {
+            --orange: #FF8C00; /* A vibrant, strong orange */
+            --black: #121212;
+            --off-white: #F5F5F5;
+            --grey: #333333;
+            --light-grey: #e0e0e0;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px; /* Offset for sticky header */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--off-white);
+            color: var(--black);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3 {
+            font-weight: 900;
+            line-height: 1.2;
+            color: var(--black);
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            text-transform: uppercase;
+            letter-spacing: -2px;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 6vw, 3rem);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            max-width: 65ch;
+        }
+
+        /* --- LAYOUT & CONTAINERS --- */
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 6rem 0;
+        }
+
+        section {
+            overflow: hidden;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(245, 245, 245, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .header.scrolled {
+            box-shadow: var(--shadow);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: 40px;
+        }
+
+        .logo-text {
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--black);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 700;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--orange);
+        }
+
+        .mobile-nav-toggle {
+            display: block;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        .hamburger-icon {
+            width: 30px;
+            height: 22px;
+            position: relative;
+        }
+
+        .hamburger-icon span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: var(--black);
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+
+        .hamburger-icon span:nth-child(1) { top: 0px; }
+        .hamburger-icon span:nth-child(2) { top: 9px; }
+        .hamburger-icon span:nth-child(3) { top: 18px; }
+
+        .mobile-nav-toggle.open .hamburger-icon span:nth-child(1) { top: 9px; transform: rotate(135deg); }
+        .mobile-nav-toggle.open .hamburger-icon span:nth-child(2) { opacity: 0; left: -30px; }
+        .mobile-nav-toggle.open .hamburger-icon span:nth-child(3) { top: 9px; transform: rotate(-135deg); }
+
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--off-white);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            transform: translateY(-100%);
+            transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .mobile-menu.open {
+            transform: translateY(0);
+        }
+
+        .mobile-menu a {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--black);
+            text-decoration: none;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background-color: var(--black);
+            color: var(--off-white);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding-top: 80px; /* Header offset */
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 1s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            color: var(--off-white);
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: var(--light-grey);
+            margin: 1rem auto 2rem;
+            max-width: 500px;
+        }
+
+        .hero-logo {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 2rem;
+            animation: logoPulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes logoPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .contract-address {
+            background-color: var(--grey);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .contract-address span {
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: var(--light-grey);
+            word-break: break-all;
+        }
+
+        .copy-button {
+            background-color: var(--orange);
+            color: var(--black);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: background-color 0.3s, transform 0.1s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .copy-button:hover {
+            background-color: #ffae42; /* Lighter orange */
+        }
+        
+        .copy-button:active {
+            transform: scale(0.98);
+        }
+
+        .copy-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .hero-bg-bear {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 1600px;
+            opacity: 0.05;
+            z-index: 1;
+        }
+
+        /* --- BUTTONS --- */
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--orange);
+            color: var(--black);
+        }
+
+        .btn-primary:hover {
+            background-color: #ffae42;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* --- ABOUT SECTION --- */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-image {
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .about-text {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .about-content.is-visible .about-image,
+        .about-content.is-visible .about-text {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* --- TOKENOMICS SECTION --- */
+        .tokenomics {
+            background-color: var(--black);
+            color: var(--off-white);
+        }
+
+        .tokenomics h2 {
+            color: var(--off-white);
+        }
+
+        .tokenomics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .tokenomics-card {
+            background-color: var(--grey);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--orange);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .tokenomics-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .tokenomics-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(255, 140, 0, 0.5);
+        }
+
+        .tokenomics-card h3 {
+            color: var(--orange);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tokenomics-card p {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--off-white);
+            margin: 0;
+        }
+
+        /* --- HOW TO BUY SECTION --- */
+        .how-to-buy-steps {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step-card {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .step-card.is-visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .step-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--orange);
+            line-height: 1;
+        }
+
+        .step-content h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        /* --- ROADMAP SECTION --- */
+        .roadmap {
+            background-color: var(--off-white);
+        }
+        
+        .roadmap-timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 3rem auto 0;
+        }
+
+        .roadmap-timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--light-grey);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+
+        .roadmap-item {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .roadmap-item.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .roadmap-item.left {
+            left: 0;
+        }
+
+        .roadmap-item.right {
+            left: 50%;
+        }
+
+        .roadmap-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: var(--off-white);
+            border: 4px solid var(--orange);
+            top: 25px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .right::after {
+            left: -10px;
+        }
+
+        .roadmap-content {
+            padding: 20px 30px;
+            background-color: #fff;
+            position: relative;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+        
+        .roadmap-content h3 {
+            color: var(--orange);
+        }
+
+        /* --- COMMUNITY/CTA SECTION --- */
+        .community {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1589923188900-85427129578a?q=80&w=2070&auto=format&fit=crop') no-repeat center center/cover;
+            text-align: center;
+            color: var(--off-white);
+        }
+
+        .community h2 {
+            color: var(--off-white);
+        }
+
+        .community p {
+            margin: 1rem auto 2.5rem;
+        }
+
+        /* --- FOOTER --- */
+        .footer {
+            background-color: var(--black);
+            color: var(--light-grey);
+            text-align: center;
+            padding: 3rem 5%;
+        }
+
+        .footer-logo {
+            height: 60px;
+            width: 60px;
+            margin: 0 auto 1rem;
+        }
+
+        .footer p {
+            font-size: 0.9rem;
+            max-width: 80ch;
+            margin: 0.5rem auto;
+        }
+
+        .footer .ticker {
+            font-weight: 700;
+            color: var(--orange);
+        }
+        
+        /* --- RESPONSIVENESS --- */
+        @media (max-width: 768px) {
+            .roadmap-timeline::after {
+                left: 10px;
+            }
+            .roadmap-item {
+                width: 100%;
+                padding-left: 50px;
+                padding-right: 10px;
+            }
+            .roadmap-item.left, .roadmap-item.right {
+                left: 0%;
+            }
+            .roadmap-item::after {
+                left: 1px;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .nav-links {
+                display: flex;
+            }
+            .mobile-nav-toggle {
+                display: none;
+            }
+            .about-content {
+                grid-template-columns: 300px 1fr;
+            }
+            .how-to-buy-steps {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header" id="header">
+        <div class="logo-container">
+            <img src="https://yoahusjzxyasdporfmmt.supabase.co/storage/v1/object/public/token-logos/6ec9c226-8220-4e06-94a3-1abc30952e7b.png?" alt="the bear logo" class="logo-img">
+            <a href="#hero" class="logo-text">the bear</a>
+        </div>
+        <nav class="nav-links">
+            <a href="#about">About</a>
+            <a href="#tokenomics">Tokenomics</a>
+            <a href="#buy">How to Buy</a>
+            <a href="#roadmap">Roadmap</a>
+        </nav>
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Menu">
+            <div class="hamburger-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>
+    </header>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="#about">About</a>
+        <a href="#tokenomics">Tokenomics</a>
+        <a href="#buy">How to Buy</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="https://app.uniswap.org/" target="_blank" class="btn btn-primary">Buy Now</a>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="hero">
+        <div class="container hero-content">
+            <img src="https://yoahusjzxyasdporfmmt.supabase.co/storage/v1/object/public/token-logos/6ec9c226-8220-4e06-94a3-1abc30952e7b.png?" alt="the bear logo" class="hero-logo">
+            <h1>STAND STRONG.</h1>
+            <p class="subtitle">A symbol of resilience for a community that stands against bullies and builds with courage.</p>
+            <a href="https://app.uniswap.org/" target="_blank" class="btn btn-primary">Buy on Uniswap</a>
+            <div class="contract-address">
+                <span id="contract-text">0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41</span>
+                <button class="copy-button" id="copy-button">
+                    <svg class="copy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                    <span id="copy-button-text">Copy</span>
+                </button>
+            </div>
+        </div>
+        <img src="https://yoahusjzxyasdporfmmt.supabase.co/storage/v1/object/public/token-logos/6ec9c226-8220-4e06-94a3-1abc30952e7b.png?" alt="background bear" class="hero-bg-bear">
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content reveal-on-scroll">
+                <img src="https://yoahusjzxyasdporfmmt.supabase.co/storage/v1/object/public/token-logos/6ec9c226-8220-4e06-94a3-1abc30952e7b.png?" alt="the bear silhouette" class="about-image">
+                <div class="about-text">
+                    <h2>The Silent Protector</h2>
+                    <p>In a world full of noise, FUD, and distractions, the bear walks with quiet confidence. It represents a collective strength, a community united by the simple idea of building something real and protecting it from negativity.</p>
+                    <p>This is for those who value resilience over hype. For those who believe in the power of a strong foundation. We are the den, and this is our symbol.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TOKENOMICS SECTION -->
+    <section id="tokenomics" class="tokenomics">
+        <div class="container">
+            <h2>Tokenomics</h2>
+            <div class="tokenomics-grid">
+                <div class="tokenomics-card reveal-on-scroll">
+                    <h3>Total Supply</h3>
+                    <p>1,000,000,000 $TB</p>
+                </div>
+                <div class="tokenomics-card reveal-on-scroll" style="transition-delay: 0.1s;">
+                    <h3>Taxes</h3>
+                    <p>0% Buy / 0% Sell</p>
+                </div>
+                <div class="tokenomics-card reveal-on-scroll" style="transition-delay: 0.2s;">
+                    <h3>Liquidity</h3>
+                    <p>Locked & Burned</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW TO BUY SECTION -->
+    <section id="buy" class="how-to-buy">
+        <div class="container">
+            <h2>How to Join The Den</h2>
+            <div class="how-to-buy-steps">
+                <div class="step-card reveal-on-scroll">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Create a Wallet</h3>
+                        <p>Download a crypto wallet like MetaMask or Trust Wallet from the app store or their official website for free.</p>
+                    </div>
+                </div>
+                <div class="step-card reveal-on-scroll" style="transition-delay: 0.1s;">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Get Some ETH</h3>
+                        <p>Have ETH in your wallet to swap for $TB. You can buy ETH directly in your wallet or transfer it from an exchange.</p>
+                    </div>
+                </div>
+                <div class="step-card reveal-on-scroll" style="transition-delay: 0.2s;">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Swap for $TB</h3>
+                        <p>Go to Uniswap, connect your wallet, and paste the $TB token address to swap your ETH for the bear.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROADMAP SECTION -->
+    <section id="roadmap" class="roadmap">
+        <div class="container">
+            <h2>Our Path</h2>
+            <div class="roadmap-timeline">
+                <div class="roadmap-item left reveal-on-scroll">
+                    <div class="roadmap-content">
+                        <h3>Phase 1: Build the Den</h3>
+                        <p>Establish a strong foundation. Grow the community of holders who believe in the project's core values of strength and resilience.</p>
+                    </div>
+                </div>
+                <div class="roadmap-item right reveal-on-scroll">
+                    <div class="roadmap-content">
+                        <h3>Phase 2: The Roar</h3>
+                        <p>Spread the message. Increase awareness through strategic marketing that highlights our unique identity, attracting like-minded individuals.</p>
+                    </div>
+                </div>
+                <div class="roadmap-item left reveal-on-scroll">
+                    <div class="roadmap-content">
+                        <h3>Phase 3: Protect the Forest</h3>
+                        <p>Expand the ecosystem. Explore meaningful utilities and partnerships that provide real value and reinforce our role as a protector in the space.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMMUNITY/CTA SECTION -->
+    <section id="community" class="community">
+        <div class="container">
+            <h2>The Den is Calling.</h2>
+            <p>Become part of a community that values substance over speculation. Stand with the bear.</p>
+            <a href="https://app.uniswap.org/" target="_blank" class="btn btn-primary">Secure Your Place</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <img src="https://yoahusjzxyasdporfmmt.supabase.co/storage/v1/object/public/token-logos/6ec9c226-8220-4e06-94a3-1abc30952e7b.png?" alt="the bear logo" class="footer-logo">
+        <p class="ticker">$TB - the bear</p>
+        <p>&copy; 2024 the bear. All Rights Reserved.</p>
+        <p>Disclaimer: $TB is a meme coin with no intrinsic value or expectation of financial return. It is for entertainment purposes only. Always do your own research.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Sticky Header ---
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // --- Mobile Navigation ---
+            const mobileNavToggle = document.getElementById('mobile-nav-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+
+            mobileNavToggle.addEventListener('click', () => {
+                mobileNavToggle.classList.toggle('open');
+                mobileMenu.classList.toggle('open');
+                document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+            });
+
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileNavToggle.classList.remove('open');
+                    mobileMenu.classList.remove('open');
+                    document.body.style.overflow = '';
+                });
+            });
+
+            // --- Copy to Clipboard ---
+            const copyButton = document.getElementById('copy-button');
+            const contractText = document.getElementById('contract-text').innerText;
+            const copyButtonText = document.getElementById('copy-button-text');
+
+            copyButton.addEventListener('click', () => {
+                navigator.clipboard.writeText(contractText).then(() => {
+                    copyButtonText.innerText = 'Copied!';
+                    copyButton.style.backgroundColor = '#4CAF50'; // Green
+                    setTimeout(() => {
+                        copyButtonText.innerText = 'Copy';
+                        copyButton.style.backgroundColor = ''; // Revert to original
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy text: ', err);
+                });
+            });
+
+            // --- Scroll Reveal Animation ---
+            const revealElements = document.querySelectorAll('.reveal-on-scroll');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            revealElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+
+</body>
+</html>
+```
